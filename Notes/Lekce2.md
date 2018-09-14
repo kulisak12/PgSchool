@@ -1,4 +1,4 @@
-﻿
+
 # Příkazový řádek
 
 ## Obecné
@@ -19,11 +19,13 @@ mezi složkami se přechází pomocí `\`
 `type`- zobrazení obsahu souboru
 
 > alej.alisma.cz
-```
+
+```batch
 dir "C:\Program Files\java\bin\*.exe" > C:\Users\student2\Documents\log.txt
 ```
 
 # Programování
+
 Pro Javu je potřeba compiler JDK
 `javac -version` vypíše verzi compileru
 Z kompilace vypadne soubor .class - kód, který lze spustit v programu JVM (Java Virtual Machine), respektive JRE (Java Runtime Environment) pomocí příkazu `java`
