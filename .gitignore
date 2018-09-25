@@ -1,0 +1,7 @@
+## Ignore Visual Studio files
+
+# Cache/options directory
+.vscode
+
+# Generated files
+.class
