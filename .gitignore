@@ -4,4 +4,4 @@
 .vscode
 
 # Generated files
-.class
+*.class
