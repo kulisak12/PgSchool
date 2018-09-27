@@ -1,9 +1,9 @@
-public class Srafovani {
+public class Srafovani2 {
     public static void main(String args[]) {
         int pruhy = 5;
         int vyska = 10;
  
-        for (int radek = 0; radek < vyska; radek++) {
+        for (int radek = vyska - 1; radek >= 0; radek--) {
             for (int odsazeni = 0; odsazeni < radek; odsazeni++) {
                 System.out.print(" ");
             }
