@@ -1,2 +1,5 @@
 # Generated files
 *.class
+
+# Visual Studio files
+.vscode
