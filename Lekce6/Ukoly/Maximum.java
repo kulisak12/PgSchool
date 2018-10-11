@@ -1,14 +1,13 @@
 public class Maximum {
 	public static void main(String args[]) {
 		java.util.Scanner sc = new java.util.Scanner(System.in);
-		int max;
-		if (sc.hasNextInt()) {
-			max = sc.nextInt(); // dosavadni maximum
-		}
-		else {
+		// odfiltruj zvastni chovani
+		if (!sc.hasNextInt()) {
 			System.out.println("Zadny vstup");
 			return;
 		}
+		
+		int max = sc.nextInt(); // dosavadni maximum
 		while (sc.hasNextInt()) {
 			int cislo = sc.nextInt();
 			// nastav nove maximum
