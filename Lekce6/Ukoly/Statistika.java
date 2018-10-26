@@ -10,12 +10,14 @@ public class Statistika {
 		// prvni cislo
 		int pocet = 1;
 		double soucet = sc.nextDouble();
+		double soucetCtvercu = soucet * soucet;
 		double min = soucet;
 		double max = soucet;
 		// dalsi cisla
 		while(sc.hasNextDouble()) {
 			double cislo = sc.nextDouble();
 			soucet += cislo;
+			soucetCtvercu += cislo * cislo;
 			if (cislo < min) {
 				min = cislo;
 			}
@@ -30,5 +32,6 @@ public class Statistika {
 		System.out.printf("Minimum = %f\n", min);
 		System.out.printf("Maximum = %f\n", max);
 		System.out.printf("Prumer = %f\n", soucet / pocet);
+		System.out.printf("Smerodatna odchylka = %f\n", Math.sqrt(soucetCtvercu * pocet - soucet * soucet) / pocet);
 	}
 }
