@@ -1,7 +1,7 @@
 public class Maximum {
 	public static void main(String args[]) {
 		java.util.Scanner sc = new java.util.Scanner(System.in);
-		// odfiltruj zvastni chovani
+		// odfiltruj zvlastni chovani
 		if (!sc.hasNextInt()) {
 			System.out.println("Zadny vstup");
 			return;
