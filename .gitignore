@@ -3,3 +3,11 @@
 
 # Visual Studio files
 .vscode
+
+# Eclipse files
+.metadata
+.recommenders
+
+# Other
+git bash.lnk
+Eclipse.lnk
