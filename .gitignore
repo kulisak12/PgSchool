@@ -5,8 +5,13 @@
 .vscode
 
 # Eclipse files
+
+## Workspace
 .metadata
 .recommenders
+
+## Project
+.settings
 
 # Other
 git bash.lnk
