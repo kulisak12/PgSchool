@@ -1,5 +1,6 @@
 /* Ukazka pouziti:
- * java -cp ../../../awh.jar;. Nahledy obrazek1.jpg vystup.jpg
+ * java -cp ../../../awh.jar;. Nahledy --matice=2x3 --vystup=matice_%d.jpg --nahled=50x50!
+ * --pozadi=44ccff obr1.jpg obr2.jpg obr3.jpg obr4.png obr5.png obr6.png obr7.png
  */
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Nahledy {
 	
 	public static int pocetSloupcuMatice = 4;
 	public static int pocetRadkuMatice = 6;
-	public static awh.Color barvaPozadi = awh.Color.GRAY;
+	public static awh.Color barvaPozadi = awh.Color.BLACK;
 	
 	public static String vystupniFormat = "nahledy-%03d.jpg";
 	
@@ -60,7 +61,7 @@ public class Nahledy {
 		else if (prepinac.startsWith("nahled")) {
 			if (hodnota.endsWith("!")) {
 				roztahnout = true;
-				hodnota = hodnota.substring(hodnota.length() - 1);
+				hodnota = hodnota.substring(0, hodnota.length() - 1);
 			}
 			int poziceX = hodnota.indexOf("x");
 			pozadovanaSirka = Integer.parseInt(
@@ -79,19 +80,24 @@ public class Nahledy {
 	}
 	
 	public static void nastavBarvuPozadi(String hexKod) {
+		// ASCII kody znaku 0, a, A
 		final int kod_0 = "0".charAt(0);
 		final int kod_a = "a".charAt(0);
+		final int kod_A = "a".charAt(0);
 		
 		int rgbKod = 0;
-		for (int i = hexKod.length() - 1; i >= 0; i++) {
+		for (int i = 0; i < 6; i++) {
 			rgbKod *= 16;
+			int charCode = hexKod.charAt(i); // ASCII kod daneho znaku
 			
-			int charCode = hexKod.charAt(i); // ciselny kod znaku
-			if (charCode >= kod_0 && charCode < kod_0 + 10) { // cislo
+			if (charCode >= kod_0 && charCode < kod_0 + 10) { // pokud to je cislo
 				rgbKod += charCode - kod_0; // nech cislo samotne
 			}
 			else if (charCode >= kod_a && charCode < kod_a + 6) { // a-f
 				rgbKod += charCode - kod_a + 10; // preved z sestnactkove do desitkove
+			}
+			else if (charCode >= kod_A && charCode < kod_A + 6) { // A-F
+				rgbKod += charCode - kod_A + 10;
 			}
 		}
 		
@@ -105,14 +111,20 @@ public class Nahledy {
 		// pridej upravene obrazky
 		for (int i = 0; i < pocetRadkuMatice; i++) {
 			for (int j = 0; j < pocetSloupcuMatice; j++) {
-				awh.Image obr = awh.Image.loadFromFile(vstupniObrazky.get(indexObrazku(poradi, i, j)));
+				int indexObrazku = indexObrazku(poradi, i, j);
+				// nedostatek obrazku pro matici, do zbytku nic nevkladej
+				if (indexObrazku >= vstupniObrazky.size()) {
+					break;
+				}
+				
+				awh.Image obr = awh.Image.loadFromFile(vstupniObrazky.get(indexObrazku));
 				obr = zmensiObrazek(obr, pozadovanaSirka, pozadovanaVyska, roztahnout);
 				obr = pridejPozadi(obr, pozadovanaSirka, pozadovanaVyska);
-				matice.pasteFrom(obr, i * pozadovanaVyska, j * pozadovanaSirka);
+				matice.pasteFrom(obr, j * pozadovanaSirka, i * pozadovanaVyska);
 			}
 		}
 		
-		matice.saveToFile(String.format(vystupniFormat, poradi));
+		matice.saveToFile(String.format(vystupniFormat, poradi + 1));
 	}
 	
 	public static int indexObrazku(int cisloMatice, int cisloRadku, int cisloSloupce) {
