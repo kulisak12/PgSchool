@@ -15,18 +15,16 @@ public class Nahledy {
 	public static int pocetRadkuMatice = 6;
 	public static awh.Color barvaPozadi = awh.Color.GRAY;
 	
-	public static String vystupniSoubor = "nahledy-%03d.jpg";
+	public static String vystupniFormat = "nahledy-%03d.jpg";
 	
 	public static void main(String[] args) {
 		List<String> vstupniObrazky = zpracujVstup(args);
 		
-		
-		// vytvor nahled
-		awh.Image obr = zmensiObrazek(awh.Image.loadFromFile(vstupniSoubor), pozadovanaSirka, pozadovanaVyska, roztahnout);
-        awh.Image nahled = pridejPozadi(obr, pozadovanaSirka, pozadovanaVyska);
-        nahled.saveToFile(vystupniSoubor);
-    }
-	
+		int pocetMatic = podilZaokrouhlenNahoru(vstupniObrazky.size(), pocetSloupcuMatice * pocetRadkuMatice);
+		for (int i = 0; i < pocetMatic; i++) {
+			vytvorMatici(i, vstupniObrazky);
+		}
+	}
 	
 	// zpracuj prepinace a dej vstupni obrazky do listu
 	public static List<String> zpracujVstup(String[] args) {
@@ -48,7 +46,7 @@ public class Nahledy {
 		String hodnota = prepinac.substring(prepinac.indexOf("=") + 1);
 		
 		if (prepinac.startsWith("vystup")) {
-			vystupniSoubor = hodnota;
+			vystupniFormat = hodnota;
 		}
 		
 		else if (prepinac.startsWith("matice")) {
@@ -100,9 +98,39 @@ public class Nahledy {
 		barvaPozadi = awh.Color.fromMergedRgb(rgbKod);
 	}
 	
+	public static void vytvorMatici(int poradi, List<String> vstupniObrazky) {
+		awh.Image matice = awh.Image.createEmpty(
+			pocetSloupcuMatice * pozadovanaSirka, pocetRadkuMatice * pozadovanaVyska, barvaPozadi);
+		
+		// pridej upravene obrazky
+		for (int i = 0; i < pocetRadkuMatice; i++) {
+			for (int j = 0; j < pocetSloupcuMatice; j++) {
+				awh.Image obr = awh.Image.loadFromFile(vstupniObrazky.get(indexObrazku(poradi, i, j)));
+				obr = zmensiObrazek(obr, pozadovanaSirka, pozadovanaVyska, roztahnout);
+				obr = pridejPozadi(obr, pozadovanaSirka, pozadovanaVyska);
+				matice.pasteFrom(obr, i * pozadovanaVyska, j * pozadovanaSirka);
+			}
+		}
+		
+		matice.saveToFile(String.format(vystupniFormat, poradi));
+	}
+	
+	public static int indexObrazku(int cisloMatice, int cisloRadku, int cisloSloupce) {
+		int index = cisloMatice * pocetRadkuMatice;
+		index += cisloRadku;
+		index *= pocetSloupcuMatice;
+		return index + cisloSloupce;
+	}
 	
 	public static double min(double a, double b) {
 		return (a < b) ? a : b;
+	}
+	
+	public static int podilZaokrouhlenNahoru(int x, int y) {
+		if (x % y == 0) {
+			return x / y;
+		}
+		return x / y + 1;
 	}
 	
 	public static awh.Image zmensiObrazek(awh.Image obrazek, int sirka, int vyska, boolean roztahnout) {
