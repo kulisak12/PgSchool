@@ -80,24 +80,24 @@ public class Nahledy {
         }
 	}
 	
-	public static void nastavBarvuPozadi(String hexCode) {
-		final int codeOf0 = "0".charAt(0);
-		final int codeOfa = "a".charAt(0);
+	public static void nastavBarvuPozadi(String hexKod) {
+		final int kod_0 = "0".charAt(0);
+		final int kod_a = "a".charAt(0);
 		
-		int rgbCode = 0;
-		for (int i = hexCode.length() - 1; i >= 0; i++) {
-			rgbCode *= 16;
+		int rgbKod = 0;
+		for (int i = hexKod.length() - 1; i >= 0; i++) {
+			rgbKod *= 16;
 			
-			int charCode = hexCode.charAt(i); // ciselny kod znaku
-			if (charCode >= codeOf0 && charCode < codeOf0 + 10) { // cislo
-				rgbCode += charCode - codeOf0; // nech cislo samotne
+			int charCode = hexKod.charAt(i); // ciselny kod znaku
+			if (charCode >= kod_0 && charCode < kod_0 + 10) { // cislo
+				rgbKod += charCode - kod_0; // nech cislo samotne
 			}
-			else if (charCode >= codeOfa && charCode < codeOfa + 6) { // a-f
-				rgbCode += charCode - codeOfa + 10; // preved z sestnactkove do desitkove
+			else if (charCode >= kod_a && charCode < kod_a + 6) { // a-f
+				rgbKod += charCode - kod_a + 10; // preved z sestnactkove do desitkove
 			}
 		}
 		
-		barvaPozadi = awh.Color.fromMergedRgb(rgbCode);
+		barvaPozadi = awh.Color.fromMergedRgb(rgbKod);
 	}
 	
 	
