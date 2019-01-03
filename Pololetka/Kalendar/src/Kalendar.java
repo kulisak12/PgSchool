@@ -6,7 +6,12 @@ import java.util.Calendar;
  */
 
 public class Kalendar {
-
+	
+	public static final String nadpisyDnu =    "| Po Ut St Ct Pa So Ne |";
+	public static final String vodorovnaCara = "+----------------------+";
+	public static final int znakuNaCislo = 3;
+	public static final int sirkaKalendare = 20; // bez okraju
+	
 	public static void main(String[] args) {
 		Calendar datum = Calendar.getInstance(); // ziskej dnesni datum
 		datum.set(Calendar.DAY_OF_MONTH, 1); // nastav prvniho
@@ -25,18 +30,18 @@ public class Kalendar {
 	}
 	
 	public static void vypisKalendarProMesic(Calendar datum) {
-		System.out.println("+----------------------+");
+		System.out.println(vodorovnaCara);
 		String hlavicka = nazevMesice(datum.get(Calendar.MONTH)) + " " + datum.get(Calendar.YEAR);
-		System.out.printf("| %s |\n", doplnMezeramiZezadu(hlavicka, 20));
-		System.out.println("+----------------------+");
-		System.out.println("| Po Ut St Ct Pa So Ne |");
+		System.out.printf("| %s |\n", doplnMezeramiZezadu(hlavicka, sirkaKalendare));
+		System.out.println(vodorovnaCara);
+		System.out.println(nadpisyDnu);
 		
 		int mesic = datum.get(Calendar.MONTH);
 		while (datum.get(Calendar.MONTH) == mesic) { // dokud jsem na stejnem mesici
 			vypisTyden(datum);
 		}
 		
-		System.out.println("+----------------------+");
+		System.out.println(vodorovnaCara);
 	}
 	
 	public static void vypisTyden(Calendar datum) {
@@ -54,7 +59,8 @@ public class Kalendar {
 			}
 			// normalni dny
 			else {
-				System.out.printf("%1$3d", datum.get(Calendar.DAY_OF_MONTH));
+				int den = datum.get(Calendar.DAY_OF_MONTH);
+				System.out.printf(doplnMezeramiZepredu(den, znakuNaCislo));
 				datum.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
@@ -83,8 +89,8 @@ public class Kalendar {
 		return String.format("%1$-" + celkovaDelka + "s", s); 
 	}
 	
-	public static String doplnMezeramiZepredu(String s, int celkovaDelka) {
-		return String.format("%1$" + celkovaDelka + "s", s); 
+	public static String doplnMezeramiZepredu(int cislo, int celkovaDelka) {
+		return String.format("%1$" + celkovaDelka + "d", cislo); 
 	}
 
 }
