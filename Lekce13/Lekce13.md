@@ -20,5 +20,8 @@ Maličká třída, kterou chci používat pouze v rámci vnější třídy. Je v
 ## Rozhraní
 U programu chci, aby pouze nějak pracoval s uživatelem, ale implementace je skrytá. Při programování nemusím vědět, kam se data zapíšou, jenom bych rád řekl, že se *někam mají zapsat*. Podobně mohu udělat program, který bude modifikovat každý pixel obrázku, co definuju odděleně, klidně i pro více možností.
 
-Místo třídy vytvořím interface. V něm jen zadefinuju nějakou metodu, kterou mohu poté implementovat několika různými způsoby *(je to něco jako virtuální třída, od které dědí další třídy, a využívá polymorfismu)*.
+Místo třídy vytvořím interface. V něm jen zadefinuju nějakou metodu, kterou mohu poté implementovat několika různými způsoby *(je to něco jako virtuální třída, která využívá polymorfismu)*.
 Rozhraní mohou mít i více metod.
+
+### Použití místo dědění
+Podle mistra Horkého nikdy není dědění nejlepším řešením, vždy se to dá lépe implementovat pomocí rozhraní. Jedno rozhraní v sobě bude mít proměnnou podřazeného rozhraní. Tím pádem se nestane, že by třídy dědily mnoho metod, které by vlastně neměly mít. Umožňuje mi to i lépe vyřešit případ, kdy bych rád vytvořil objekt, který je kombinací vícero rozhraní.
