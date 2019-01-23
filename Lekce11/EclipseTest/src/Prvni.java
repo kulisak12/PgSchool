@@ -9,6 +9,7 @@ public class Prvni {
 			int vstup = sc.nextInt();
 			System.out.printf("Napsal jsi %d\n", vstup);
 		}
+		sc.close();
 		
 	}
 }
