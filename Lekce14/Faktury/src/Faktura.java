@@ -130,6 +130,7 @@ public class Faktura {
             }
             tisk.text(radka);
         }
+        sc.close();
  
         tisk.nadpis("Informace o prodejci");
         for (String s : ADRESA_PRODEJCE) {
