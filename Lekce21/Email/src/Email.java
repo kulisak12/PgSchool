@@ -1,41 +1,29 @@
 import java.util.Scanner;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class Email {
 
-	public static String getHeader(String emailText) {
+	public static Map<String, String> nactiHlavicku(String emailText) {
 		Scanner sc = new Scanner(emailText);
-		String output = "";
 		
-		int state = 0;
+		Map<String, String> polozky = new HashMap<>();
 		while (sc.hasNextLine()) {
-			String line = sc.nextLine();
-			if (state == 0) { // before sender
-				if (line.startsWith("From:")) {
-					state = 1;
-				}
+			String radek = sc.nextLine();
+			if (radek.isEmpty()) {
+				break;
 			}
 			
-			if (state == 1) { // sender
-				output += line.substring("From: ".length()) + "\n";
-				state = 2;
-				continue;
+			String casti[] = radek.split(": ", 2);
+			if (casti.length != 2) {
+				continue; // tise ignoruj, TODO nejake chybove hlaseni
 			}
 			
-			if (state == 2) { // subject start
-				output += line.substring("Subject: ".length()) + "\n";
-				state = 3;
-				continue;
-			}
-			
-			if (state == 3) {
-				if (line.startsWith("To:")) {
-					break;
-				}
-			}
+			polozky.put(casti[0], casti[1]);
 		}
 		
-		
 		sc.close();
-		return output;
+		return polozky;
 	}
 }
