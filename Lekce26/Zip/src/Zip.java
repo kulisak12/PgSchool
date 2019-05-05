@@ -1,8 +1,12 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 public class Zip {
 
@@ -12,6 +16,18 @@ public class Zip {
 		
 		if (prepinace.vypsatSoubory) {
 			vypisObsah(zipSoubor, prepinace.zobrazitExtraInfo);
+		}
+		
+		if (prepinace.odzipovat) {
+			String mistoOdzipovani = ".";
+			if (prepinace.zpusobOdzipovani == 1) {
+				mistoOdzipovani = ziskejJmenoSouboru(zipSoubor.getName());
+			}
+			if (prepinace.zpusobOdzipovani == 2) {
+				mistoOdzipovani = prepinace.mistoOdzipovani;
+			}
+			File cilovaSlozka = new File(mistoOdzipovani);
+			odzipuj(zipSoubor, cilovaSlozka);
 		}
 		
 	}
@@ -45,5 +61,36 @@ public class Zip {
 		}
 		
 		return String.format("%.2f %s", velikost, jednotky[indexPredpony]);
+	}
+	
+	public static void odzipuj(ZipFile zipSoubor, File cilovaSlozka) throws IOException {
+		if (!cilovaSlozka.exists()) {
+			cilovaSlozka.mkdirs();
+		}
+		
+		byte[] buffer = new byte[1024];
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipSoubor.getName()));
+        ZipEntry souborVZipu = zis.getNextEntry();
+        
+        while (souborVZipu != null) {
+            File novySoubor = new File(cilovaSlozka, souborVZipu.getName());
+            new File(novySoubor.getParent()).mkdirs();
+            novySoubor.createNewFile();
+            FileOutputStream fos = new FileOutputStream(novySoubor);
+            int delka;
+            while ((delka = zis.read(buffer)) > 0) {
+                fos.write(buffer, 0, delka);
+            }
+            fos.close();
+            souborVZipu = zis.getNextEntry();
+        }
+        zis.closeEntry();
+        zis.close();
+	}
+	
+	public static String ziskejJmenoSouboru(String cesta) {
+		int indexLomitka = cesta.lastIndexOf("\\"); // muze byt i nenalezeno
+		int indexTecky = cesta.lastIndexOf(".");
+		return cesta.substring(indexLomitka + 1, indexTecky);
 	}
 }

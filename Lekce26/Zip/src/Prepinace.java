@@ -1,15 +1,14 @@
-// parsing and storing of parameters
 public class Prepinace {
 	String jmenoSouboru;
 	boolean vypsatSoubory = false;
 	boolean zobrazitExtraInfo = false;
 	boolean odzipovat = false;
-	int zpusobOdzipovani = 0; // 0 = here, 1 = folder here, 2 = custom
+	int zpusobOdzipovani = 0; // 0 = zde, 1 = slozka zde, 2 = custom
 	String mistoOdzipovani;
 	
 	Prepinace(String[] prepinace) {
 		jmenoSouboru = prepinace[0];
-		int typNasledujihoPrepinace = 0; // 0 = parameter, 1 = value
+		int typNasledujihoPrepinace = 0; // 0 = prepinac, 1 = hodnota
 		for (int i = 1; i < prepinace.length; i++) {
 			typNasledujihoPrepinace = naparsujPrepinac(prepinace[i], typNasledujihoPrepinace);
 		}
