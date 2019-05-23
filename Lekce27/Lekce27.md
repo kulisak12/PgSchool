@@ -15,13 +15,20 @@ Pokud chceme pracovat jen na malé èásti, která nepotøebuje mìnit zbytek, opìt st
 
 Novou vìtev vytvoøíme pomocí `git branch`. Pøes `git checkout` mohu pøepínat mezi vìtvemi. Když chci vìtve slít, pøepnu se do nadøazené vìtve a napíšu `git merge`.
 
+### Velké týmy
+Typickým pøíkladem je fork (v zásadì nová vìtev). Uživatelé mají vlastním repozitáø. Do hlavního projektu *(upstream)* se pak dají zmìny pøelít pomocí pull requestù. Pokud si chci vlastní fork udržovat aktuální, pøidám si jej jako remote (stejnì jako origin). Pak za pøíkazy jako `git fetch` pøidám název remotu, tedy upstream. Pøíkaz `git remote -v` vypíše všechny pøipojené repozitáøe.
+
+Vìtve mùžu slívat i opaèným smìrem, právì tím si stáhnu zmìny v upstreamu. Na to se pak používá `git merge upstream/master`. Oproti tomu `git pull` funguje trochu jinak, ten spustí `fetch` a `rebase`, což znamená, že to commity pøesune až za ty, které se stáhnou z upstreamu.
+
+I u merge lze pomocí `-m` pøidat zprávu pro commit, který se tím vytvoøí.
+
 #### Merge conflict
 Mùže se stát, že ve dvou vìtvích bude zmìnìn stejný soubor. Pokud se záplaty nepøekrývají, Git to zvládne. Pokud se jedná o zmìnu na stejném místì, je tøeba ruènì vybrat jednu možnost.
 
-Slití vìtví je vlastnì taky commit. Pokud neprojde, vlastní zmìny musíme commitnout ruènì.
+Slití vìtví je vlastnì taky commit. Pokud neprojde, vlastní zmìny musíme commitnout ruènì. Otevøeme-li dotèený soubor, nalezneme v nìm znaèky, které ukazují, kde došlo k chybì. Po opravì mùžeme commitnout zmìny.
 
-### Velké týmy
-Typickým pøíkladem je fork (v zásadì nová vìtev). Uživatelé mají vlastním repozitáø. Do hlavního projektu *(upstream)* se pak dají zmìny pøelít pomocí pull requestù. Pokud si chci vlastní fork udržovat aktuální, pøidám si jej jako remote (jako origin). Pak za pøíkazy jako `git fetch` pøidám název remotu, tedy upstream. Vìtve mùžu slívat i opaèným smìrem, právì tím si stáhnu zmìny v upstreamu.
+#### Pull request
+Pokud chci své zmìny dostat do zdrojového repozitáøe, mohu toho docílit pomocí pull requestu. Pokud jej vlastník pøijme, probìhne merge z mé vìtve do jeho.
 
 ## Historie
 
